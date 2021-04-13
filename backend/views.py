@@ -196,9 +196,10 @@ def to_decrypt(request):
     filename = fs.save(file1.name,file1)
     name = fs.url(filename)
     n1 = name.split('/')[-1]
+    storage_path = os.path.join(os.path.join(os.environ['USERPROFILE']), 'Desktop')
     for ex in extentions:
         if n1.find("."+ex)!=-1:
-            decrypt = pyAesCrypt.decryptFile("media/"+n1,"C:/Users/nil17/Desktop/"+n1+"."+ex, password, bufferSize )
+            decrypt = pyAesCrypt.decryptFile("media/"+n1,storage_path+n1+"."+ex, password, bufferSize )
     os.remove("media/"+n1)
     return render(request,'postin.html',{'email':request.session['name']})
 
