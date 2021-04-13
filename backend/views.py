@@ -80,7 +80,7 @@ def create(request):
 def postreport(request):
     title = request.POST['title']
     details = request.POST.get('details')
-    #url = request.POST['url']
+    url = request.POST['url']
     data ={
         'title':title,
         'details':details,
