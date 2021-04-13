@@ -1,5 +1,5 @@
 import os
-from django.http.response import HttpResponse
+from django.http.response import HttpResponse, FileResponse
 from django.shortcuts import render 
 import pyrebase
 from django.contrib.auth import logout
@@ -8,7 +8,6 @@ from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 from django.shortcuts import render,redirect
 from django.contrib.auth import logout
-from django.views.generic.base import RedirectView
 import pyAesCrypt
 import mimetypes
 config={
@@ -34,7 +33,7 @@ def postin(request):
         password = request.POST['pass']
         try:
             user = authe.sign_in_with_email_and_password(email,password)
-            request.session['key'] = password
+            request.session['password'] = password
             request.session['uid'] = str(user['idToken'])
             idtoken = request.session['uid']
             a = authe.get_account_info(idtoken)
@@ -161,7 +160,7 @@ def fileUpload(request):
     global url  
     fs = FileSystemStorage()
     bufferSize = 64 * 1024  
-    password = request.session['key']
+    password = request.session['password']
     f1 = request.FILES['uploadedFile']
     saved = fs.save(f1.name,f1)
     name = fs.url(saved)
@@ -191,21 +190,23 @@ def to_decrypt(request):
     extentions = ['txt','pdf','png','jpg','jpeg','py'] 
     bufferSize = 64 * 1024  
     file1 = request.FILES['file1']
-    password = request.session['key']
+    password = request.session['password']
     fs = FileSystemStorage()
     filename = fs.save(file1.name,file1)
     name = fs.url(filename)
     n1 = name.split('/')[-1]
-    ext = ""
+    ext = ''
     for ex in extentions:
         if n1.find("."+ex)!=-1:
             ext = ex
             decrypt = pyAesCrypt.decryptFile("media/"+n1,"media/"+n1+"."+ex, password, bufferSize )
+    
     fl_path = "media/"+n1+"."+ext
     filename = n1+"."+ext
     fs1 = FileSystemStorage()
     with fs1.open(filename) as data:
         mime_type, _ = mimetypes.guess_type(fl_path)
+        print(mime_type)
         response = HttpResponse(data, content_type=mime_type)
         response['Content-Disposition'] = "attachment; filename=%s" % filename
     os.remove("media/"+n1)
