@@ -154,13 +154,12 @@ def post_check(request):
     
     return render(request,'post_check.html',{'w':work,'p':progress,'e':name,'u':url})
 
-@csrf_exempt
 def fileUpload(request):
     # encryption/decryption buffer size - 64K 
     global url  
     fs = FileSystemStorage()
     bufferSize = 64 * 1024  
-    password = request.session['nk']
+    password = request.session.get('nk')
     f1 = request.FILES['uploadedFile']
     saved = fs.save(f1.name,f1)
     name = fs.url(saved)
