@@ -205,7 +205,6 @@ def to_decrypt(request):
     fs1 = FileSystemStorage()
     with fs1.open(filename) as data:
         mime_type, _ = mimetypes.guess_type(fl_path)
-        print(mime_type)
         response = HttpResponse(data, content_type=mime_type)
         response['Content-Disposition'] = "attachment; filename=%s" % filename
     os.remove("media/"+n1)
