@@ -1,0 +1,80 @@
+{% if messg %}
+<script>
+  alert("{{ messg }}");
+</script>
+{% endif %} {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Sign In</title>
+    {% include 'head.html' %}
+    <link
+      rel="stylesheet"
+      href="https://getbootstrap.com/docs/5.0/examples/sign-in/signin.css"
+    />
+  <body>
+    <main class="form-signin">
+      <form action='{% url "postin" %}' method="post">
+        {% csrf_token %}
+        <div class="center">
+          <img
+            class="mb-4"
+            src="{% static 'backend/logo1.png' %}"
+            alt=""
+            width="300"
+            height="165"
+          />
+          <img
+            class="mb-4"
+            src="{% static 'backend/text.png' %}"
+            alt=""
+            width="300"
+            height="80"
+          />
+
+          <h1 class="h3 mb-3 fw-normal">Please Sign In</h1>
+        </div>
+        <div class="form-floating">
+          <input
+            type="email"
+            class="form-control"
+            name="email"
+            id="floatingInput"
+            placeholder="name@example.com"
+          />
+          <label for="floatingInput">Email address</label>
+        </div>
+        <br />
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control"
+            name="pass"
+            id="floatingPassword"
+            placeholder="Password"
+          />
+          <label for="floatingPassword">Password</label>
+        </div>
+
+        <div class="checkbox mb-3">
+          <label>
+            <input type="checkbox" value="remember-me" /> Remember me
+          </label>
+        </div>
+        <button class="w-100 btn btn-lg btn-primary" type="submit">
+          Sign In
+        </button>
+        <br />
+      </form>
+      <br />
+      <button
+        type="submit"
+        class="w-100 btn btn-lg btn-primary"
+        onclick="location.href='{% url 'signup' %}'"
+      >
+        Sign Up
+      </button>
+      <p class="mt-5 mb-3 text-muted">&copy; 2021</p>
+    </main>
+  </body>
+</html>

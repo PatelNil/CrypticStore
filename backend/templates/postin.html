@@ -1,0 +1,44 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CrypticStore</title>
+    {% include 'head.html' %}
+  </head>
+  <body
+    style="background-image: url('{% static 'backend/yyy.jpg' %}'); background-repeat='no-repeat'; width:100%; height:100%"
+  >
+    {% include 'navbar.html' %}
+    <br />
+    <div class="center">
+      <div>
+        <span style="font-size: 48px">Welcome {{ email}} </span>
+        <!-- <button name='btn'  class='btn1' value='Logout' onclick="location.href='{% url 'logout' %}'">Logout</button> -->
+      </div>
+      <br />
+      <div>
+        <button
+          type="button"
+          class="w-50 btn btn-lg btn-primary"
+          onclick="location.href='{% url 'create' %}'"
+        >
+          Encrypt</button
+        ><br /><br />
+        <button
+          type="button"
+          class="w-50 btn btn-lg btn-primary"
+          onclick="location.href='{% url 'check' %}'"
+        >
+          Check</button
+        ><br /><br />
+        <button
+          type="button"
+          class="w-50 btn btn-lg btn-primary"
+          onclick="location.href='{% url 'decrypt' %}'"
+        >
+          Decrypt
+        </button>
+      </div>
+    </div>
+  </body>
+</html>

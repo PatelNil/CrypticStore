@@ -1,0 +1,24 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'head.html' %}
+  <title>All Files</title>
+  <body
+    style="background-image: url('{% static 'backend/yyy.jpg' %}'); background-repeat='no-repeat'; width:100%; height:100%"
+  >
+    <div class="center">
+      {% include 'navbar.html' %}
+      <br />
+      <h1>Your Files</h1>
+      <p>----------------------------------------</p>
+      {% if data %} {% for ls_time,dat,work in data %}
+      <h3>
+        Date: {{dat}} &nbsp;<br />Title:
+        <a href="/post_check/?z={{ls_time}}">{{work}}</a>
+      </h3>
+      {% endfor %} {% else %}
+      <h1>No Files</h1>
+      {%endif%}
+    </div>
+  </body>
+</html>

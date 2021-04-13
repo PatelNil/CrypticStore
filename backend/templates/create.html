@@ -1,0 +1,49 @@
+{% load static%}
+<!DOCTYPE html>
+<html lang="en">
+  {% include 'head.html' %}
+  <title>Encrypt</title>
+  <body
+    style="background-image: url('{% static 'backend/yyy.jpg' %}'); background-repeat='no-repeat'; width:100%; height:100%"
+  >
+    {% include 'navbar.html' %}
+    <br />
+    <br />
+    <br />
+    <div id="upload" class="center">
+      <form
+        action="http://127.0.0.1:8000/fileUpload/"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <h1>Encryption</h1>
+        {% csrf_token %}
+        <div class="mb-3">
+          <label for="formFile" class="form-label"
+            >Upload Only .txt .pdf .png</label
+          >
+          <input
+            class="w-50 form-control"
+            name="uploadedFile"
+            style="margin-left: 480px"
+            type="file"
+            id="formFile"
+          />
+        </div>
+        <button type="submit" class="w-50 btn btn-lg btn-primary">
+          Encrypt
+        </button>
+      </form>
+      <p>
+        <script>
+          document.getElementById("formFile").value;
+        </script>
+      </p>
+    </div>
+    {% if file_id %}
+    <script>
+      document.getElementById("upload").style.display = "none";
+    </script>
+    {% endif %}
+  </body>
+</html>
