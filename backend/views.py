@@ -33,7 +33,7 @@ def postin(request):
         password = request.POST['pass']
         try:
             user = authe.sign_in_with_email_and_password(email,password)
-            request.session['password'] = password
+            request.session['nk'] = password
             request.session['uid'] = str(user['idToken'])
             idtoken = request.session['uid']
             a = authe.get_account_info(idtoken)
@@ -48,7 +48,8 @@ def postin(request):
             message='Invaid Credentials'
             return render(request,'signin.html',{'messg':message})
     except:
-        name = request.session['password']
+        name = request.session['name']
+        print(request.session['nk'])
         return render(request,'postin.html',{'email':name})
 
 def log_out(request):
@@ -159,7 +160,7 @@ def fileUpload(request):
     global url  
     fs = FileSystemStorage()
     bufferSize = 64 * 1024  
-    password = request.session['password']
+    password = request.session['nk']
     f1 = request.FILES['uploadedFile']
     saved = fs.save(f1.name,f1)
     name = fs.url(saved)
@@ -189,7 +190,7 @@ def to_decrypt(request):
     extentions = ['txt','pdf','png','jpg','jpeg','py'] 
     bufferSize = 64 * 1024  
     file1 = request.FILES['file1']
-    password = request.session['password']
+    password = request.session['nk']
     fs = FileSystemStorage()
     filename = fs.save(file1.name,file1)
     name = fs.url(filename)
