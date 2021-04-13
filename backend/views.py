@@ -196,8 +196,10 @@ def to_decrypt(request):
     filename = fs.save(file1.name,file1)
     name = fs.url(filename)
     n1 = name.split('/')[-1]
+    ext = ""
     for ex in extentions:
         if n1.find("."+ex)!=-1:
+            ext = ex
             decrypt = pyAesCrypt.decryptFile("media/"+n1,"media/"+n1+"."+ex, password, bufferSize )
     fl_path = "media/"+n1+"."+ext
     filename = n1+"."+ext
