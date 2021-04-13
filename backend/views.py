@@ -175,7 +175,7 @@ def fileUpload(request):
     url = storage.child(path_on_cloud).get_url(request.session['uid'])
     os.remove(path_on_local)
     os.remove("media/"+n1)
-    return render(request,'create_title.html',{'file_id':name})
+    return render(request,'create_title.html',{'file_id':name,'url':url})
 
 
 def decrypt(request):
