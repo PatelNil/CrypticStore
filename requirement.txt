@@ -1,4 +1,0 @@
-django
-pyrebase4
-pyAesCrypt
-django-cors-headers
