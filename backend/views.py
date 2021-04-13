@@ -10,7 +10,7 @@ from django.shortcuts import render,redirect
 from django.contrib.auth import logout
 from django.views.generic.base import RedirectView
 import pyAesCrypt
-
+import mimetypes
 config={
   'apiKey': "AIzaSyDkEtETtizrO_fRmVAL13iJDnGrHU7eHrs",
     'authDomain': "cnsproject-61c6b.firebaseapp.com",
@@ -200,7 +200,16 @@ def to_decrypt(request):
     for ex in extentions:
         if n1.find("."+ex)!=-1:
             decrypt = pyAesCrypt.decryptFile("media/"+n1,storage_path+n1+"."+ex, password, bufferSize )
+    fl_path = "media/"+n1+"."+ext
+    filename = n1+"."+ext
+    fs1 = FileSystemStorage()
+    with fs1.open(filename) as data:
+        mime_type, _ = mimetypes.guess_type(fl_path)
+        print(mime_type)
+        response = HttpResponse(data, content_type=mime_type)
+        response['Content-Disposition'] = "attachment; filename=%s" % filename
     os.remove("media/"+n1)
-    return render(request,'postin.html',{'email':request.session['name']})
+    os.remove("media/"+n1+"."+ext)
+    return response
 
 
