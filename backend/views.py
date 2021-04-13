@@ -48,8 +48,7 @@ def postin(request):
             message='Invaid Credentials'
             return render(request,'signin.html',{'messg':message})
     except:
-        name = request.session['name']
-        print(request.session['key'])
+        name = request.session['password']
         return render(request,'postin.html',{'email':name})
 
 def log_out(request):
