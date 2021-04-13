@@ -167,9 +167,10 @@ def fileUpload(request):
     name = fs.url(saved)
     n1 = name.split('/')[-1]
     try:
-        pyAesCrypt.encryptFile("media/"+n1,"media/"+n1+".aes",password, bufferSize)
+        err = pyAesCrypt.encryptFile("media/"+n1,"media/"+n1+".aes",password, bufferSize)
+        print(err)
     except:
-        return HttpResponse("Not good")
+        return HttpResponse('not')
     path_on_cloud = 'files/'+n1+".aes"
     path_on_local = "media/"+n1+".aes"
     storage.child(path_on_cloud).put(path_on_local)
@@ -187,7 +188,7 @@ def aboutus(request):
 
 def to_decrypt(request):
     # encryption/decryption buffer size - 64K  
-    extentions = ['txt','pdf','png'] 
+    extentions = ['txt','pdf','png','jpg','jpeg','py'] 
     bufferSize = 64 * 1024  
     file1 = request.FILES['file1']
     password = request.session['key']
