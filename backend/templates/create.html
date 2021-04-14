@@ -10,11 +10,12 @@
     <br />
     <br />
     <br />
-    <div id="upload" class="center">
+    <div id="upload">
       <form
-        action="http://127.0.0.1:8000/fileUpload/"
+        action="{% url 'fileUpload' %}"
         method="POST"
         enctype="multipart/form-data"
+        class="center"
       >
         <h1>Encryption</h1>
         {% csrf_token %}
@@ -23,9 +24,9 @@
             >Upload Only .txt .pdf .png .jpg .jpeg .py
           </label>
           <input
-            class="w-50 form-control"
+            class="center w-50 form-control"
             name="uploadedFile"
-            style="margin-left: 480px"
+            style="margin: auto"
             type="file"
             id="formFile"
           />

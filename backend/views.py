@@ -33,7 +33,7 @@ def postin(request):
         password = request.POST['pass']
         try:
             user = authe.sign_in_with_email_and_password(email,password)
-            request.session['key'] = password
+            request.session['nk'] = password
             request.session['uid'] = str(user['idToken'])
             idtoken = request.session['uid']
             a = authe.get_account_info(idtoken)
@@ -49,7 +49,7 @@ def postin(request):
             return render(request,'signin.html',{'messg':message})
     except:
         name = request.session['name']
-        print(request.session['key'])
+        print(request.session['nk'])
         return render(request,'postin.html',{'email':name})
 
 def log_out(request):
@@ -80,7 +80,7 @@ def create(request):
 def postreport(request):
     title = request.POST['title']
     details = request.POST.get('details')
-    #url = request.POST['url']
+    url = request.POST['url']
     data ={
         'title':title,
         'details':details,
@@ -160,7 +160,7 @@ def fileUpload(request):
     global url  
     fs = FileSystemStorage()
     bufferSize = 64 * 1024  
-    password = request.session['key']
+    password = request.session['nk']
     f1 = request.FILES['uploadedFile']
     saved = fs.save(f1.name,f1)
     name = fs.url(saved)
@@ -176,7 +176,7 @@ def fileUpload(request):
     url = storage.child(path_on_cloud).get_url(request.session['uid'])
     os.remove(path_on_local)
     os.remove("media/"+n1)
-    return render(request,'create_title.html',{'file_id':name})
+    return render(request,'create_title.html',{'file_id':name,'url':url})
 
 
 def decrypt(request):
@@ -190,7 +190,7 @@ def to_decrypt(request):
     extentions = ['txt','pdf','png','jpg','jpeg','py'] 
     bufferSize = 64 * 1024  
     file1 = request.FILES['file1']
-    password = request.session['key']
+    password = request.session['nk']
     fs = FileSystemStorage()
     filename = fs.save(file1.name,file1)
     name = fs.url(filename)
