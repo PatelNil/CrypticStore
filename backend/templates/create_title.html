@@ -15,13 +15,14 @@
       {% csrf_token %}
       <div class="mb-3">
         <!-- <label for="exampleInputEmail1" class="form-label fontz">Title</label> -->
+        <input type="hidden" name='url' value="{{url}}">
         <input
           type="text"
           name="title"
           class="form-control"
           aria-describedby="emailHelp"
           placeholder="Title"
-          style="height: 35px; width: 75%;margin-left: 237px;"
+          style="height: 35px; width: 75%;margin: auto;"
         />
         <input type='hidden' name='url' value="{{url}}" />
       </div>
